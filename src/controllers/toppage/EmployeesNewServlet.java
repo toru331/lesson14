@@ -34,7 +34,7 @@ public class EmployeesNewServlet extends HttpServlet {
 	    request.setAttribute("_token", request.getSession().getId());
 	    request.setAttribute("employee", new Employee());
 
-	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp");
+	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp"); //new.jspにフォワード
 	    rd.forward(request, response);
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
