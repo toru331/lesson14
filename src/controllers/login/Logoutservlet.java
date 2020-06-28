@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Logoutservlet
+ * Servlet implementation class LogoutServlet
  */
 @WebServlet("/logout")
-public class Logoutservlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logoutservlet() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,8 +31,8 @@ public class Logoutservlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	    request.getSession().removeAttribute("login_employee");
 
-	    request.getSession().setAttribute("flush", "ログアウトしました。");
-	    response.sendRedirect(request.getContextPath() + "/login");
+        request.getSession().setAttribute("flush", "ログアウトしました。");
+        response.sendRedirect(request.getContextPath() + "/login");
 	}
 
 }
