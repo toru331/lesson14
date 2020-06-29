@@ -69,7 +69,7 @@ public class ReportsCreateServlet extends HttpServlet {
 	            request.setAttribute("report", r);
 	            request.setAttribute("errors", errors);
 
-	            RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/reports/new.jsp");
+	            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/new.jsp");
 	            rd.forward(request, response);
 	        } else {
 	            em.getTransaction().begin();
