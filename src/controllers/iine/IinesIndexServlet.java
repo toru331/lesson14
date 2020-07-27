@@ -38,9 +38,6 @@ public class IinesIndexServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	    EntityManager em = DBUtil.createEntityManager();
 
-	    //Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
-
-	    //Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
 
 	    int page;
@@ -54,15 +51,10 @@ public class IinesIndexServlet extends HttpServlet {
 	            .setParameter("employee", (Employee)request.getSession().getAttribute("login_employee"))
 	            .getResultList();
 
-//	    long iineCount = em.createNamedQuery("checkIine", Long.class)
-//        .setParameter("report", r)
-//        .setParameter("employee", (Employee)request.getSession().getAttribute("login_employee"))
-//        .getSingleResult();
 
 	    em.close();
 
 	    request.setAttribute("getMyAllIines", getMyAllIines);
-//	    request.setAttribute("iineCount", iineCount);
 	    request.setAttribute("page", page);
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/iine/index.jsp");
 	    rd.forward(request, response);

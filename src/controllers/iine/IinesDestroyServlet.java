@@ -39,14 +39,6 @@ public class IinesDestroyServlet extends HttpServlet {
 	    //日報のIDをリクエストパラメータから取得
 	    Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
-//	    //いいねインスタンスを取得
-//	    Iine i = new Iine();
-//
-//	    //いいねインスタンスへセット
-//	    i.setReport(r);
-//
-//	    //セッションよりログインしている従業員のインスタンスをセット
-//	    i.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
 	    List<Iine> iines = em.createNamedQuery("getIine", Iine.class)
                 .setParameter("report", r)
