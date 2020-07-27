@@ -5,7 +5,13 @@
     <c:param name="content">
         <c:choose>
             <c:when test="${report != null }" >
-                 <h2>日報 詳細ページ</h2>
+				<c:if test="${flush != null }">
+					<div id="flush_success">
+						<c:out value="${flush }"></c:out>
+					</div>
+				</c:if>
+
+				<h2>日報 詳細ページ</h2>
 
                  <table>
                      <tbody>
@@ -35,6 +41,12 @@
                                  <fmt:formatDate value="${report.updated_at }" pattern="yyyy-MM-dd HH:mm:ss" />
                              </td>
                          </tr>
+                         <tr>
+                             <th>いいね数</th>
+                             <td>
+                                <c:out value="${getIineReportCount}"></c:out>
+                             </td>
+                         </tr>
                      </tbody>
                  </table>
 
@@ -48,5 +60,18 @@
         </c:choose>
 
         <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
+        <c:choose>
+            <c:when test="${iineCount == 0 }">
+				<p>
+					<a href="<c:url value="/iine?id=${report.id }" />">いいね</a>
+				</p>
+
+			</c:when>
+            <c:otherwise>
+                <p>
+                    <a href="<c:url value="/iines/destroy?id=${report.id }" />">いいねを外す</a>
+                </p>
+            </c:otherwise>
+        </c:choose>
     </c:param>
 </c:import>

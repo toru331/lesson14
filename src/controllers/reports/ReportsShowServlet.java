@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
 import models.Report;
 import utils.DBUtil;
 
@@ -38,11 +39,24 @@ public class ReportsShowServlet extends HttpServlet {
 	    EntityManager em = DBUtil.createEntityManager();
 
 	    Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+	    //Report r = em.find(Report.class, (Integer)(request.getSession().getAttribute("id")));
+
+	    long getIineReportCount = (long)em.createNamedQuery("getIineReportCount", Long.class)
+	            .setParameter("report", r)
+	            .getSingleResult();
+
+
+	    long iineCount = em.createNamedQuery("checkIine", Long.class)
+	            .setParameter("report", r)
+	            .setParameter("employee", (Employee)request.getSession().getAttribute("login_employee"))
+	            .getSingleResult();
 
 	    em.close();
 
 	    request.setAttribute("report", r);
 	    request.setAttribute("_token", request.getSession().getId());
+	    request.setAttribute("iineCount", iineCount);
+	    request.setAttribute("getIineReportCount", getIineReportCount);
 
 	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
 	    rd.forward(request, response);

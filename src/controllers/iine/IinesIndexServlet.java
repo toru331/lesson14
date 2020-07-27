@@ -1,4 +1,4 @@
-package controllers.reports;
+package controllers.iine;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,20 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Report;
+import models.Employee;
+import models.Iine;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class ReportsIndexServlet
+ * Servlet implementation class IinesIndexServlet
  */
-@WebServlet("/reports/index")
-public class ReportsIndexServlet extends HttpServlet {
+@WebServlet("/iine/index")
+public class IinesIndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsIndexServlet() {
+    public IinesIndexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,37 +38,41 @@ public class ReportsIndexServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	    EntityManager em = DBUtil.createEntityManager();
 
+	    //Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
+
+	    //Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+
+
 	    int page;
-	    try{
+	    try {
 	        page = Integer.parseInt(request.getParameter("page"));
 	    } catch(Exception e) {
 	        page = 1;
 	    }
-	    List<Report> reports = em.createNamedQuery("getAllReports", Report.class)
-	            .setFirstResult(15 * (page -1))
-	            .setMaxResults(15)
+
+	    List<Iine> getMyAllIines = em.createNamedQuery("getMyAllIines", Iine.class)
+	            .setParameter("employee", (Employee)request.getSession().getAttribute("login_employee"))
 	            .getResultList();
 
-	    long reports_count = (long)em.createNamedQuery("getReportsCount", Long.class)
-	                                 .getSingleResult();
+//	    long iineCount = em.createNamedQuery("checkIine", Long.class)
+//        .setParameter("report", r)
+//        .setParameter("employee", (Employee)request.getSession().getAttribute("login_employee"))
+//        .getSingleResult();
 
-
-	    long iines_count = (long)em.createNamedQuery("getIinesCount", Long.class)
-	            .getSingleResult();
-
-	    request.setAttribute("iines_count", iines_count);
 	    em.close();
 
-	    request.setAttribute("reports", reports);
-	    request.setAttribute("reports_count", reports_count);
+	    request.setAttribute("getMyAllIines", getMyAllIines);
+//	    request.setAttribute("iineCount", iineCount);
 	    request.setAttribute("page", page);
+	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/iine/index.jsp");
+	    rd.forward(request, response);
+
 	    if(request.getSession().getAttribute("flush") != null) {
 	        request.setAttribute("flush", request.getSession().getAttribute("flush"));
 	        request.getSession().removeAttribute("flush");
 	    }
 
-	    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/index.jsp");
-	    rd.forward(request, response);
+
 
 	}
 
